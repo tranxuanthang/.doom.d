@@ -24,7 +24,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-moonlight)
+(setq doom-theme 'doom-city-lights)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -56,9 +56,9 @@
 ;; Fcitx
 ;;
 
-(use-package! fcitx
-  :config
-  (fcitx-default-setup))
+;; (use-package! fcitx
+;;   :config
+;;   (fcitx-default-setup))
 
 ;;
 ;; Thang's web-mode config
@@ -69,6 +69,13 @@
 (setq web-mode-css-indent-offset 2)
 (setq web-mode-style-padding 0)
 (setq web-mode-script-padding 0)
+
+;;
+;; Thang's lsp-mode config
+;;
+
+(setq lsp-enable-file-watchers t)
+(setq lsp-file-watch-threshold 1000)
 
 ;;
 ;; editorconfig config
@@ -87,7 +94,10 @@
 
 (use-package! flycheck
   :config
-  (flycheck-add-mode 'javascript-eslint 'web-mode))
+  (define-derived-mode vue-mode web-mode "Vue mode")
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+  (flycheck-add-mode 'javascript-eslint 'vue-mode)
+  (flycheck-add-mode 'css-stylelint 'vue-mode))
 
 ;;
 ;; Thang's Keybindings
